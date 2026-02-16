@@ -545,18 +545,23 @@ if "edges_df" not in st.session_state:
 # -------- Tab 1: Image + Trace
 with tab1:
     st.subheader("Upload image and trace nodes/edges (assisted)")
-    img_file = st.file_uploader("Upload a graph image (png/jpg)", type=["png", "jpg", "jpeg"])  # :contentReference[oaicite:3]{index=3}
-
+    img_file = st.file_uploader(
+    "Upload a graph image (png/jpg)",
+    type=["png", "jpg", "jpeg"],
+    key="img_uploader",)
     # bg_image = None
     # if img_file is not None:
     #     bg_image = Image.open(img_file).convert("RGB")
     #     st.image(bg_image, caption="Reference image (you will trace on the canvas below)", use_container_width=True)
+
+    if img_file is not None:
+        st.session_state["img_bytes"] = img_file.getvalue()
     
     bg_image = None
     canvas_key = "canvas_empty"
     
-    if img_file is not None:
-        file_bytes = img_file.getvalue()
+    if "img_bytes" in st.session_state:
+        file_bytes = st.session_state["img_bytes"]
         
         img_hash = hashlib.md5(file_bytes).hexdigest()[:10]
         canvas_key = f"canvas_{img_hash}"
