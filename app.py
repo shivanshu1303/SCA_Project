@@ -583,7 +583,6 @@ with tab1:
     radius = st.slider("Circle radius", 6, 30, 12)
 
     if bg_image is not None:
-        st.write("bg_image:", type(bg_image), bg_image.mode, bg_image.size)
         canvas_res = st_canvas(
             fill_color="rgba(0, 0, 0, 0)",
             stroke_width=stroke_width,
